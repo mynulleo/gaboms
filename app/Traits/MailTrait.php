@@ -61,7 +61,7 @@ trait MailTrait
         );
 
         //
-        $sendgrid = new \SendGrid('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');
+        $sendgrid = new \SendGrid(config('sendgrid_api_key'));
         try {
             $response = $sendgrid->send($email);
 
