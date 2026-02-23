@@ -1,0 +1,13 @@
+.content_view_page{
+  .content_view_title{
+    @include font(22px, 600);
+    margin-bottom: 14px;
+  }
+  p{
+    @include font(15px, 400);
+    line-height: 26px;
+  }
+  p+p{
+    margin-top: 10px;
+  }
+}

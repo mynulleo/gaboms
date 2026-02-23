@@ -1,0 +1,11 @@
+.card {
+  background-color: #F6F8FC;
+  border: 1px solid #E1E3E1;
+  border-radius: 10px;
+  height: 100%
+}
+
+.card_title {
+  @include font(18px, 500);
+  margin-bottom:20px;
+}

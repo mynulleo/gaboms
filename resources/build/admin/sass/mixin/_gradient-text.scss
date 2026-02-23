@@ -1,0 +1,12 @@
+@mixin gradient_primary {
+  background: $gradient;
+  color: transparent;
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+@mixin gradient_black {
+  background: $gradient_black;
+  color: transparent;
+  -webkit-background-clip: text;
+  background-clip: text;
+}

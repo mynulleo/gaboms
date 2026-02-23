@@ -1,0 +1,43 @@
+fieldset {
+  background-color: $white;
+  border: 1px solid $secondary;
+  border-radius: 10px;
+  padding: 14px;
+  position: relative;
+  height: 100%;
+
+  .legend {
+    position: absolute;
+    top: -17px;
+    left: 17px;
+    font-size: 15px;
+    font-weight: 500;
+    color: $black;
+    border-radius: 40px;
+    background-color: $white;
+    padding: 5px 14px;
+    border: 1px solid #E3E3E3;
+  }
+
+  .table> :not(caption)>*>* {
+    padding: 0.5rem 1rem !important;
+  }
+
+  .bandwidth> :not(caption)>*>* {
+    padding: 0.2rem 0.2rem !important;
+  }
+
+  table {
+    margin-top: 10px;
+  }
+}
+
+.static_fieldset {
+  border: 0;
+  padding-bottom: 0;
+
+  .legend {
+    left: 0;
+    top: -8px;
+  }
+}

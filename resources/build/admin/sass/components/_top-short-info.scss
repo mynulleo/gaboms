@@ -1,0 +1,93 @@
+.top_short_info {
+    padding: 15px 10px;
+
+    .text {
+        .label {
+            @include font(16px, 500);
+            color: $black;
+            margin-bottom: 13px
+        }
+
+        .title {
+            @include font(34px, 700);
+            color: $black;
+        }
+    }
+
+    .icon {
+        width: 80px;
+        height: 80px;
+        background-color: #D3E3FD;
+        flex: 0 0 auto;
+
+        i {
+            font-size: 24px;
+            color: $black;
+            transition: $transition;
+            opacity: 0.9;
+        }
+    }
+
+    &:hover {
+        .icon {
+            i {
+                transform: rotateY(380deg);
+            }
+        }
+    }
+}
+
+.top_short_info_card {
+    transition: $transition;
+
+    &:hover {
+        box-shadow: inset 1px 0 0 #dadce0, inset -1px 0 0 #dadce0, 0 1px 2px 0 rgba(60, 64, 67, .3), 0 1px 3px 1px rgba(60, 64, 67, .15)
+    }
+}
+
+// responsive css
+@media (min-width:1400px) and (max-width:1799.98px) {
+    .top_short_info .text .title {
+        font-size: 24px;
+    }
+
+    .top_short_info .icon {
+        width: 70px;
+        height: 70px;
+        color: #112C47;
+    }
+
+    .top_short_info .icon svg {
+        width: 34px;
+        height: 34px;
+    }
+
+    .top_short_info {
+        padding: 8px 8px;
+    }
+}
+
+@media (max-width:1399.98px) {
+    .top_short_info {
+        padding: 0;
+    }
+
+    .top_short_info .text .title {
+        font-size: 24px;
+    }
+
+    .top_short_info .text .label {
+        font-size: 14px;
+        margin-bottom: 10px;
+    }
+
+    .top_short_info .icon {
+        width: 60px;
+        height: 60px;
+
+        svg {
+            width: 30px;
+            height: 30px;
+        }
+    }
+}

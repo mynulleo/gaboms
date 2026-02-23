@@ -1,0 +1,50 @@
+.multiple_options_create {
+    // .mlt_title {
+    //     @include font(16px, 700);
+    //     margin-bottom: 14px;
+    // }
+
+    // .multiple_option_item+.multiple_option_item {
+    //     margin-top: 16px;
+    //     padding-top: 13px;
+    //     border-top: 1px solid #ddd;
+    // }
+    td{
+        vertical-align: top;
+    }
+}
+.center_td_value{
+    vertical-align: middle !important;
+}
+
+
+.multiple_fields_actions_btn {
+    flex: 0 0 auto;
+    // margin-top: 25px;
+
+    .btns {
+        border: 0;
+        width: 40px;
+        height: 41px;
+        background-color: crimson;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 5px;
+        color: $white;
+        padding: 0;
+
+        &:hover {
+            background-color: $black;
+        }
+
+        svg {
+            width: 20px;
+            height: 20px;
+        }
+    }
+
+    .add_more {
+        background-color: #1C9527;
+    }
+}
