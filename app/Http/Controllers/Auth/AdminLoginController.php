@@ -47,9 +47,12 @@ class AdminLoginController extends Controller
                 ];
 
                 $organization = OrganizationUser::with('organization:id,organization_name,block,expired_date,status')->where('email', $email)->first();
+
                 if (!empty($organization)) {
                     if ($organization->block == 0) {
+
                         if (Auth::guard('admin')->attempt($arr, $request->remember)) {
+
                             Session::forget($email);
                             Artisan::call('cache:clear');
 

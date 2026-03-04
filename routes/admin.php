@@ -78,19 +78,16 @@ Route::middleware(['auth:admin', 'tenantDB'])->group(function () {
     Route::get('getclientbyid/{clientid?}', [App\Http\Controllers\Admin\ClientController::class, 'getClientByID'])->name('Client.getClientByID');
     Route::get('getsupplierbyid/{supid?}', [App\Http\Controllers\Admin\SupplierController::class, 'getSupplierByID'])->name('Supplier.getSupplierByID');
     Route::get('getpurchaseinvoices/{supid?}', [App\Http\Controllers\Admin\PaymentController::class, 'supplierPurchaseInvoices'])->name('Payment.supplierPurchaseInvoices');
-    Route::get('getulpbyid/{supid?}', [App\Http\Controllers\Admin\UplinkProviderController::class, 'getULPByID'])->name('UplinkProvicer.getULPByID');
     Route::get('getulpbandwidths/{ulpid?}', [App\Http\Controllers\Admin\PaymentController::class, 'ULPBandwidth'])->name('Payment.ULPBandwidth');
     Route::get('getemppayabledatas/{empid?}', [App\Http\Controllers\Admin\PaymentController::class, 'getEmpPayableDatas'])->name('Payment.getEmpPayableDatas');
     Route::get('getofficeexpenses', [App\Http\Controllers\Admin\PaymentController::class, 'getOfficeExpenses'])->name('Payment.getOfficeExpenses');
     Route::get('getloanhistories/{empid?}', [App\Http\Controllers\Admin\LoanInfoController::class, 'getLoanHistories'])->name('Payment.getLoanHistories');
     Route::get('getsalaryparameters', [App\Http\Controllers\Admin\SalaryParameterController::class, 'getSalaryParameters'])->name('Payment.getSalaryParameters');
     Route::get('clientsforcommissions/{serviceid?}', [App\Http\Controllers\Admin\CommissionController::class, 'getClientsForCommission'])->name('Commission.clientsforcommissions');
-    Route::get('getpackagebyclientid/{clientid?}', [App\Http\Controllers\Admin\PackageController::class, 'getPackageByClientID'])->name('Package.getpackagebyclientid');
     Route::get('/invoice/{invoice}/months', [App\Http\Controllers\Admin\InvoiceController::class, 'months']);
     Route::post('generate-invoice', [App\Http\Controllers\Admin\InvoiceController::class, 'generateInvoice']);
     Route::get('getbanks', [App\Http\Controllers\Admin\BankController::class, 'getBanks']);
     Route::get('getservices', [App\Http\Controllers\Admin\ServiceController::class, 'getServices']);
-    Route::get('uplinkproviders', [App\Http\Controllers\Admin\UplinkProviderController::class, 'getUplinkProviders']);
     Route::get('suppliers', [App\Http\Controllers\Admin\SupplierController::class, 'getSuppliers']);
     Route::get('employees', [App\Http\Controllers\Admin\EmployeeController::class, 'getEmployees']);
     Route::get('getserviceinfo/{serviceid?}', [App\Http\Controllers\Admin\ServiceController::class, 'getServiceInfo']);
@@ -152,13 +149,11 @@ Route::middleware(['auth:admin', 'tenantDB'])->group(function () {
         // invoice extra action
         Route::get('invoice/bill/{id}', [App\Http\Controllers\Admin\InvoiceController::class, 'bill'])->name('invoice.bill');
         Route::get('invoice/moneyreceipt/{id}', [App\Http\Controllers\Admin\InvoiceController::class, 'moneyreceipt'])->name('invoice.moneyreceipt');
-        Route::get('allinvoice', [App\Http\Controllers\Admin\AllInvoiceController::class, 'index'])->name('allinvoice.index');
 
         Route::resource('category', App\Http\Controllers\Admin\CategoryController::class);
         Route::resource('mediaValidator', App\Http\Controllers\Admin\MediaValidatorController::class);
         Route::resource('helpInfo', App\Http\Controllers\Admin\HelpInfoController::class);
         Route::resource('service', App\Http\Controllers\Admin\ServiceController::class);
-        Route::resource('package', App\Http\Controllers\Admin\PackageController::class);
         Route::resource('invoice', App\Http\Controllers\Admin\InvoiceController::class);
         Route::resource('unit', App\Http\Controllers\Admin\UnitController::class);
         Route::resource('client', App\Http\Controllers\Admin\ClientController::class);
@@ -167,12 +162,10 @@ Route::middleware(['auth:admin', 'tenantDB'])->group(function () {
         Route::resource('branch', App\Http\Controllers\Admin\BranchController::class);
         Route::resource('designation', App\Http\Controllers\Admin\DesignationController::class);
         Route::resource('employee', App\Http\Controllers\Admin\EmployeeController::class);
-        Route::resource('uplinkProvider', App\Http\Controllers\Admin\UplinkProviderController::class);
         Route::resource('account', App\Http\Controllers\Admin\AccountController::class);
         Route::resource('supplier', App\Http\Controllers\Admin\SupplierController::class);
         Route::resource('financialYear', App\Http\Controllers\Admin\FinancialYearController::class);
         Route::resource('voucher', App\Http\Controllers\Admin\VoucherController::class);
-        Route::resource('bandwidthHistory', App\Http\Controllers\Admin\BandwidthHistoryController::class);
         Route::resource('expense', App\Http\Controllers\Admin\ExpenseController::class);
         Route::resource('purchase', App\Http\Controllers\Admin\PurchaseController::class);
         Route::resource('item', App\Http\Controllers\Admin\ItemController::class);

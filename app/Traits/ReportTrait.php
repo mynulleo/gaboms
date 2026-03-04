@@ -14,8 +14,6 @@ use App\Models\PaymentDetail;
 use App\Models\VoucherDetail;
 use App\Models\Commission;
 use App\Models\UplinkProvider;
-use Illuminate\Support\Carbon;
-use App\Models\BandwidthHistory;
 use App\Models\SalarySheetDetail;
 use Illuminate\Support\Facades\DB;
 
@@ -563,50 +561,6 @@ trait ReportTrait
         $to   = array_key_exists('to_date', $searchdata) ? vue_to_server_date($searchdata['to_date']) : date('Y-m-t');
         $receivables = [];
 
-        // ---------- Bandwidth Sale Receivable ----------
-        $queryb = DB::table('bandwidth_histories as bh')
-            ->leftJoin('clients', 'bh.client_id', '=', 'clients.id')
-            ->select(
-                'bh.client_id',
-                'clients.clientid as clientid',
-                'clients.mobile as client_mobile',
-                'clients.name as client_name',
-                DB::raw('SUM(bh.total_include_amount) as billed_amount')
-            )
-            ->where('bh.type', 'Sale')
-            ->where('bh.is_closed', 0)
-            ->whereNull('deleted_at')
-            ->groupBy('bh.client_id', 'clients.name');
-
-        if (!empty($from) && !empty($to)) {
-            $queryb->whereBetween('bh.transaction_date', [$from, $to]);
-        }
-
-        if (!empty($searchdata['client_id'])) {
-            $queryb->where('bh.client_id', $searchdata['client_id']);
-        }
-
-        $bandwidthReceivable = $queryb->get();
-
-        foreach ($bandwidthReceivable as $row) {
-            $received_amount = $this->getClientReceived($row->client_id, $from, $to);
-            $due_amount = ($row->billed_amount - ($received_amount['receive_amount'] + $received_amount['discount_amount']));
-
-            if ($due_amount <= 0) {
-                continue;
-            }
-
-            $receivables[$row->client_id] = [
-                'clientid'         => $row->clientid,
-                'client_name'       => $row->client_name,
-                'client_mobile'     => $row->client_mobile,
-                'bill_amount'       => (float) $row->billed_amount,
-                'discount_amount'   => (float) $received_amount['discount_amount'],
-                'received_amount'   => (float) $received_amount['receive_amount'],
-                'invoice_due'       => (float) $due_amount,
-            ];
-        }
-
         // ---------- Invoice Receivable ----------
         $iquery = DB::table('invoices')
             ->leftJoin('clients', 'invoices.client_id', '=', 'clients.id')
@@ -709,36 +663,6 @@ trait ReportTrait
         $employee_id        = $searchdata['employee_id'] ?? null;
 
         $payables = collect([]);
-
-        // Bandwidth Purchase Payable
-
-        $bandwidthQuery = BandwidthHistory::with(['uplink_provider'])
-            ->where('type', 'Purchase')
-            ->where('is_closed', 0)
-            ->whereNull('deleted_at')
-            ->whereBetween('transaction_date', [$from, $to]);
-
-        if ($uplink_provider_id) {
-            $bandwidthQuery->where('uplink_provider_id', $uplink_provider_id);
-        }
-
-        $bandwidth = $bandwidthQuery->get()->map(function ($row) {
-            $paid = $this->getPaidAmount('BandwidthHistory', $row->id);
-
-            return [
-                'reference_type' => 'BandwidthHistory',
-                'reference_id'   => $row->id,
-                'name'           => $row->uplink_provider->org_name ?? 'Unknown Provider',
-                'source'         => 'Bandwidth Purchase',
-                'date'           => $row->transaction_date,
-                'payable'        => (float) $row->total_include_amount,
-                'paid'           => (float) $paid,
-                'outstanding'    => round($row->total_include_amount - $paid, 2),
-            ];
-        })->filter(fn($r) => $r['outstanding'] > 0);
-
-        $payables = $payables->merge($bandwidth);
-
 
         //   Purchase Payable (Supplier)
         $purchaseQuery = Purchase::with('supplier')
@@ -1075,112 +999,6 @@ trait ReportTrait
 
         return response()->json([
             'client'          => $client,
-            'opening_balance' => $openingBalance,
-            'records'         => $ledger
-        ]);
-    }
-
-    public function getUplinkProviderLedger($searchdata)
-    {
-        $from = !empty($searchdata['from_date'])
-            ? vue_to_server_date($searchdata['from_date'])
-            : date('Y-m-01');
-
-        $to = !empty($searchdata['to_date'])
-            ? vue_to_server_date($searchdata['to_date'])
-            : date('Y-m-t');
-
-        $uplink_provider_id = $searchdata['uplink_provider_id'] ?? null;
-
-        if (!$uplink_provider_id) {
-            return response()->json([
-                'status'  => false,
-                'message' => 'Uplink Provider ID is required'
-            ], 422);
-        }
-
-        $uplinkprovider = UplinkProvider::find($uplink_provider_id);
-        if (!$uplinkprovider) {
-            return response()->json([
-                'status'  => false,
-                'message' => 'Uplink Provider not found'
-            ], 404);
-        }
-
-        $payableAccountId = Account::where('system_key_name', 'accounts-payable')->first()?->id; // Accounts Receivable
-
-        /**
-         * 🔹 Opening Balance (Before from_date)
-         */
-        $openingBalance = VoucherDetail::query()
-            ->join('vouchers', 'voucher_details.voucher_id', '=', 'vouchers.id')
-            ->where('voucher_details.reference_type', 'UplinkProvider')
-            ->where('voucher_details.reference_id', $uplink_provider_id)
-            ->where('voucher_details.account_id', $payableAccountId)
-            ->whereDate('vouchers.voucher_date', '<', $from)
-            ->sum(DB::raw('voucher_details.cr_amount - voucher_details.dr_amount'));
-
-        /**
-         * 🔹 Ledger rows (from_date to to_date)
-         */
-        $ledger = VoucherDetail::query()
-            ->select([
-                'voucher_details.id',
-                'voucher_details.voucher_id',
-                'voucher_details.account_id',
-                'voucher_details.dr_amount',
-                'voucher_details.cr_amount',
-                'voucher_details.created_at',
-                'vouchers.voucherno',
-                'vouchers.voucher_date',
-                'accounts.account_name',
-                'accounts.account_type',
-            ])
-            ->join('vouchers', 'voucher_details.voucher_id', '=', 'vouchers.id')
-            ->join('accounts', 'voucher_details.account_id', '=', 'accounts.id')
-            ->where('voucher_details.reference_type', 'UplinkProvider')
-            ->where('voucher_details.reference_id', $uplink_provider_id)
-            ->whereBetween('vouchers.voucher_date', [$from, $to])
-            ->orderBy('vouchers.voucher_date')
-            ->orderBy('voucher_details.id')
-            ->get();
-
-        /**
-         * 🔹 Running Balance with Opening Balance
-         */
-        $balance = (float) $openingBalance;
-
-        $ledger = $ledger->map(function ($row) use (&$balance, $payableAccountId) {
-
-            if ((int)$row->account_id === $payableAccountId) {
-                $balance +=  (float)$row->cr_amount - (float)$row->dr_amount;
-            }
-
-            $row->running_balance = $balance;
-            return $row;
-        });
-
-        /**
-         * 🔹 Prepend Opening Balance row
-         */
-        $openingRow = (object) [
-            'id'             => null,
-            'voucher_id'     => null,
-            'account_id'     => null,
-            'dr_amount'      => 0,
-            'cr_amount'      => 0,
-            'created_at'     => null,
-            'voucherno'      => null,
-            'voucher_date'   => $from,
-            'account_name'   => 'Previous Due',
-            'account_type'   => null,
-            'running_balance' => $openingBalance,
-        ];
-
-        $ledger->prepend($openingRow);
-
-        return response()->json([
-            'uplinkprovider'  => $uplinkprovider,
             'opening_balance' => $openingBalance,
             'records'         => $ledger
         ]);

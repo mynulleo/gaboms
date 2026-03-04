@@ -16,7 +16,6 @@ use Illuminate\Http\Request;
 use App\Models\PaymentDetail;
 use App\Models\VoucherDetail;
 use App\Http\Resources\Resource;
-use App\Models\BandwidthHistory;
 use App\Traits\InvoiceTrait;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Base\BaseController;
@@ -418,23 +417,7 @@ class InvoiceController extends BaseController
 
     public function generateInvoice()
     {
-        DB::beginTransaction();
-
-        try {
-            $this->autoInvoiceForPackage();
-            $this->autoInvoiceForBandwidth();
-
-            DB::commit();
-            return $this->responseReturn("create", true);
-        } catch (\Exception $e) {
-            DB::rollBack();
-
-            return response()->json([
-                'status'  => false,
-                'message' => 'Invoice generation failed',
-                'error'   => $e->getMessage()
-            ], 500);
-        }
+        return true;
     }
 
 

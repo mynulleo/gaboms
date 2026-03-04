@@ -3,7 +3,6 @@
 namespace App\Traits;
 
 use App\Models\Account;
-use App\Models\BandwidthHistory;
 use App\Models\Commission;
 use App\Models\Expense;
 use App\Models\ExpenseDetail;
@@ -31,25 +30,6 @@ trait PaymentTrait
     public function clientDueInvoices($clientid)
     {
         $datas = [];
-        $bandwidthdatas = BandwidthHistory::where('client_id', $clientid)
-            ->where('is_closed', 0)->get();
-
-        if ($bandwidthdatas) {
-            foreach ($bandwidthdatas as $bdata) {
-                $paid_amount = $this->getRefPaidAmount('BandwidthHistory', $bdata->id);
-                $due_amount = $bdata->total_include_amount - $paid_amount;
-                $data = [
-                    'reference_type'    => 'BandwidthHistory',
-                    'reference_id'      => $bdata->id,
-                    'account_id'        => $this->getAccountID('accounts-receivable'),
-                    'reference_info'    => $bdata->bhno . '-' . date('d M, Y', strtotime($bdata->transaction_date)),
-                    'amount'            => $bdata->total_include_amount,
-                    'paid_amount'       => $paid_amount,
-                    'due_amount'        => $due_amount,
-                ];
-                $datas[] = $data;
-            }
-        }
 
         $invoices = Invoice::where('client_id', $clientid)->where('is_closed', 0)->get();
 
@@ -132,33 +112,6 @@ trait PaymentTrait
                     'account_id'        => $this->getExpenseAccount('Purchase'),
                     'reference_info'    => $idata->invoiceno . '-' . date('d M, Y', strtotime($idata->purchase_date)),
                     'amount'            => $idata->total_amount,
-                    'paid_amount'       => $paid_amount,
-                    'due_amount'        => $due_amount
-                ];
-                $datas[] = $data;
-            }
-        }
-        return $datas;
-    }
-
-    public function ULPBandwidth($ulpid)
-    {
-        $datas = [];
-        $query = BandwidthHistory::where('uplink_provider_id', (int) $ulpid)
-            ->where('is_closed', 0);
-        $bandwidthdatas = $query->get();
-
-        if ($bandwidthdatas) {
-            foreach ($bandwidthdatas as $bdata) {
-
-                $paid_amount = $this->getRefPaidAmount('BandwidthHistory', $bdata->id);
-                $due_amount = $bdata->total_include_amount - $paid_amount;
-                $data = [
-                    'reference_type'    => 'BandwidthHistory',
-                    'reference_id'      => $bdata->id,
-                    'account_id'        => $this->getAccountID('bandwidth-expense'),
-                    'reference_info'    => $bdata->bhno . '-' . date('d M, Y', strtotime($bdata->transaction_date)),
-                    'amount'            => $bdata->total_include_amount,
                     'paid_amount'       => $paid_amount,
                     'due_amount'        => $due_amount
                 ];
@@ -349,10 +302,6 @@ trait PaymentTrait
             return $this->updateInvoiceInfo($ref);
         }
 
-        if ($ref['reference_type'] === 'BandwidthHistory') {
-            return $this->updateBandwidthHistory($ref);
-        }
-
         if ($ref['reference_type'] === 'SalarySheetDetail') {
             return $this->updateSalarySheet($ref);
         }
@@ -420,23 +369,6 @@ trait PaymentTrait
 
         $invoice->update([
             'paid_amount' => $inv['amount'],
-            'is_closed' => $isClosed ? 1 : 0
-        ]);
-
-        return true;
-    }
-
-    public function updateBandwidthHistory(array $ref): bool
-    {
-        $bandwidth = BandwidthHistory::find($ref['reference_id']);
-
-        if (!$bandwidth) {
-            return false;
-        }
-
-        $isClosed = ($ref['amount'] == $bandwidth->total_include_amount) || (!empty($ref['is_closed']));
-
-        $bandwidth->update([
             'is_closed' => $isClosed ? 1 : 0
         ]);
 

@@ -21,7 +21,6 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\App;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
-use App\Models\Website\Gallery\Slider;
 use Illuminate\Support\Facades\Config;
 
 class LibController extends Controller
@@ -134,10 +133,7 @@ class LibController extends Controller
 
     public function getServiceModule()
     {
-        return [
-            ['name' => 'BandwidthHistory', 'value' => 'BandwidthHistory'],
-            ['name' => 'Package', 'value' => 'Package'],
-        ];
+        return [];
     }
 
     public function getClientTypes()
@@ -355,7 +351,7 @@ class LibController extends Controller
             ->get();
     }
 
-    
+
 
     public function getItemsByCategory($categoryid)
     {
@@ -415,7 +411,7 @@ class LibController extends Controller
             $query->where('district_id', $districtid);
         }
         $data = $query->get(['id', 'area_name']);
-        return $data; 
+        return $data;
     }
 
     public function getUnits($module = null)

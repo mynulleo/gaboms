@@ -589,11 +589,6 @@ const routes = [
                 component: () =>
                     import("./../views/admin/invoice/moneyreceipt"),
             },
-            {
-                path: "/allinvoice",
-                name: "allinvoice.index",
-                component: () => import("./../views/admin/allinvoice/index"),
-            },
             // ------------------Unit PORTION------------------
             {
                 path: "/unit",
@@ -865,31 +860,7 @@ const routes = [
                 name: "voucher.edit",
                 component: () => import("./../views/admin/voucher/create"),
             },
-            // ------------------BandwidthHistory PORTION------------------
-            {
-                path: "/bandwidthHistory",
-                name: "bandwidthHistory.index",
-                component: () =>
-                    import("./../views/admin/bandwidthHistory/index"),
-            },
-            {
-                path: "/bandwidthHistory/create",
-                name: "bandwidthHistory.create",
-                component: () =>
-                    import("./../views/admin/bandwidthHistory/create"),
-            },
-            {
-                path: "/bandwidthHistory/:id",
-                name: "bandwidthHistory.show",
-                component: () =>
-                    import("./../views/admin/bandwidthHistory/view"),
-            },
-            {
-                path: "/bandwidthHistory/:id/edit",
-                name: "bandwidthHistory.edit",
-                component: () =>
-                    import("./../views/admin/bandwidthHistory/create"),
-            },
+
             // ------------------Expense PORTION------------------
             {
                 path: "/expense",
@@ -1205,12 +1176,6 @@ const routes = [
                 path: "/report/clientledger",
                 name: "report.clientledger",
                 component: () => import("./../views/admin/report/clientledger"),
-            },
-            {
-                path: "/report/uplinkproviderledger",
-                name: "report.uplinkproviderledger",
-                component: () =>
-                    import("./../views/admin/report/uplinkproviderledger"),
             },
             {
                 path: "/report/supplierledger",

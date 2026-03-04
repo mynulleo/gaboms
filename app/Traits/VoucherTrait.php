@@ -142,10 +142,6 @@ trait VoucherTrait
                 elseif ($payment->payment_type == 'Pay') {
                     $module = null;
                     $module_id = null;
-                    if ($detail['reference_type'] == 'BandwidthHistory') {
-                        $module = 'UplinkProvider';
-                        $module_id = $payment->uplink_provider_id;
-                    }
 
                     if ($detail['reference_type'] == 'Purchase') {
                         $module = 'Supplier';
@@ -491,12 +487,6 @@ trait VoucherTrait
                 $ref_type = 'Supplier';
             }
 
-            if ($module == 'BandwidthHistory') {
-                $account_id = $this->getAccountID('bandwidth-expense');
-                $ref_type = 'UplinkProvider';
-                $ref_id = $vdata['ref_id'];
-            }
-
             if ($module == 'SalarySheetDetail') {
                 $account_id = $this->getAccountID('SalaryExpense');
                 $payable_account_id = $this->getAccountID('salary-payable');
@@ -597,11 +587,6 @@ trait VoucherTrait
                 $account_id = $this->getAccountID('sales-revenue');
                 $ref_type   = 'Client';
                 $vdate = $vdata['date'];
-            }
-
-            if ($module == 'BandwidthHistory') {
-                $account_id = $this->getAccountID('bandwidth-income');
-                $ref_type   = 'Client';
             }
 
             // Create voucher master
