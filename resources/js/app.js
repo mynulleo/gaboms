@@ -41,7 +41,7 @@ const app = createApp({
             tableSpinner: false,
             validation_errors: {},
             helpInfo: {},
-            media_validators:{},
+            media_validators: {},
         };
     },
     methods: {
@@ -79,6 +79,8 @@ const app = createApp({
         if (this.loggedIn) {
             this.getInitializeSystems();
         }
+        console.log("Router error");
+        console.log(this.$router.getRoutes());
     },
 });
 
@@ -107,7 +109,7 @@ if (process.env.NODE_ENV !== "production") {
     app.config.errorHandler = (error, instance, info) => {
         console.log(
             "%c!!------------ Error occurred -------------!!",
-            "color: red; font-size: 20px; font-weight: 800;"
+            "color: red; font-size: 20px; font-weight: 800;",
         );
         console.log("----------------------------------------");
 
@@ -123,7 +125,7 @@ if (process.env.NODE_ENV !== "production") {
         console.log("--------------------------------------");
         console.log(
             "%cError End! \n\n",
-            "color: red; font-size: 20px; font-weight: 800;"
+            "color: red; font-size: 20px; font-weight: 800;",
         );
 
         alert("Error occurred! Please, check your console. Thank you!");
