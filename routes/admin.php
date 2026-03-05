@@ -60,6 +60,10 @@ Route::middleware(['auth:admin', 'tenantDB'])->group(function () {
     Route::get('table-sorting', [App\Http\Controllers\Base\SortingController::class, 'sorting']);
     Route::get('get-last-sorting', [App\Http\Controllers\Base\SortingController::class, 'lastSorting']);
 
+    // Menu Route...
+    Route::get('module-delete', [App\Http\Controllers\Admin\System\ModuleController::class, 'moduleDelete'])->name('module.delete');
+
+
     Route::get('backend-parent-menus', [App\Http\Controllers\Admin\System\MenuController::class, 'getParentMenu'])->name('backendParentMenu');
     Route::get('getcategories/{modulename?}', [App\Http\Controllers\Admin\System\LibController::class, 'getcategories'])->name('getcategories');
     Route::get('getunits/{modulename?}', [App\Http\Controllers\Admin\System\LibController::class, 'getunits'])->name('getunits');
@@ -178,6 +182,8 @@ Route::middleware(['auth:admin', 'tenantDB'])->group(function () {
         Route::resource('bank', App\Http\Controllers\Admin\BankController::class);
         Route::resource('fundTransfer', App\Http\Controllers\Admin\FundTransferController::class);
         Route::resource('withdrawl', App\Http\Controllers\Admin\WithdrawlController::class);
+        Route::resource('workorder', App\Http\Controllers\Admin\WorkorderController::class);
+        Route::resource('chalan', App\Http\Controllers\Admin\ChalanController::class);
 
         //Report 
         Route::get('report/itemladger', [App\Http\Controllers\Admin\ReportController::class, 'itemladger'])->name('report.itemladger');

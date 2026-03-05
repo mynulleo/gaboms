@@ -7,7 +7,6 @@ use App\Models\Area;
 use App\Models\Unit;
 use App\Models\Branch;
 use App\Models\Account;
-use App\Models\Package;
 use App\Models\Service;
 use App\Models\Category;
 use App\Models\District;
@@ -16,7 +15,6 @@ use App\Models\Supplier;
 use App\Models\Designation;
 use App\Models\System\Menu;
 use App\Models\Organization;
-use App\Models\UplinkProvider;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\App;
 use App\Http\Controllers\Controller;
@@ -67,7 +65,6 @@ class LibController extends Controller
             'variable' => $this->variable,
             'app_env' => config("app.env"),
             'profile_menus' => $this->profileMenus(),
-            'packages' => $this->getPackages(),
             'payment_status' => $this->getPaymentStatus(),
             'services' => $this->getServices(),
             'modules' => $this->unitModuleNames(),
@@ -83,7 +80,6 @@ class LibController extends Controller
             'opening_balance_types' => $this->getOBlanceTypes(),
             'voucher_types' => $this->getVoucherTypes(),
             'voucher_reference_types' => $this->getVoucherReferenceTypes(),
-            'uplinkproviders' => $this->getUplinkProviders(),
             'suppliers' => $this->getActiveSuppliers(),
             'loaninfotypes' => $this->getLoanInfoTypes(),
             'scheduledays' => $this->getScheduleDays(),
@@ -233,7 +229,6 @@ class LibController extends Controller
         return [
             ['name' => 'Client', 'value' => 'Client'],
             ['name' => 'Supplier', 'value' => 'Supplier'],
-            ['name' => 'UplinkProvider', 'value' => 'UplinkProvider'],
             ['name' => 'Employee', 'value' => 'Employee'],
             ['name' => 'Invoice', 'value' => 'Invoice'],
             ['name' => 'Purchase', 'value' => 'Purchase'],
@@ -257,7 +252,6 @@ class LibController extends Controller
         return [
             ['name' => 'Client', 'value' => 'Client'],
             ['name' => 'Supplier', 'value' => 'Supplier'],
-            ['name' => 'Uplink', 'value' => 'Uplink'],
             ['name' => 'Employee', 'value' => 'Employee'],
             ['name' => 'System', 'value' => 'System']
         ];
@@ -334,11 +328,6 @@ class LibController extends Controller
     public function getActiveSuppliers()
     {
         return Supplier::where('status', 'active')->get(['id', 'org_name']);
-    }
-
-    public function getUplinkProviders()
-    {
-        return UplinkProvider::where('status', 'active')->get(['id', 'org_name']);
     }
 
     public function getAllAccounts()
@@ -427,25 +416,6 @@ class LibController extends Controller
     public function getDistricts()
     {
         return District::where('status', 'active')->get(['id', 'district_name']);
-    }
-
-    public function getPackages($serviceid = null)
-    {
-        $query = Package::where('status', 'active');
-        if ($serviceid) {
-            $query->where('service_id', $serviceid);
-        }
-        $packages = $query->get(['id', 'title']);
-        return $packages;
-    }
-
-    public function getPackageByID($packageid = null)
-    {
-        $query = Package::where('status', 'active');
-        if ($packageid) {
-            $query->where('id', $packageid);
-        }
-        return $query->first();
     }
 
     public function getServices()

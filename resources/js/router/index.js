@@ -514,49 +514,6 @@ const routes = [
                 name: "service.edit",
                 component: () => import("./../views/admin/service/create"),
             },
-
-            // ------------------Testimonial PORTION------------------
-            {
-                path: "/testimonial",
-                name: "testimonial.index",
-                component: () => import("./../views/admin/testimonial/index"),
-            },
-            {
-                path: "/testimonial/create",
-                name: "testimonial.create",
-                component: () => import("./../views/admin/testimonial/create"),
-            },
-            {
-                path: "/testimonial/:id",
-                name: "testimonial.show",
-                component: () => import("./../views/admin/testimonial/view"),
-            },
-            {
-                path: "/testimonial/:id/edit",
-                name: "testimonial.edit",
-                component: () => import("./../views/admin/testimonial/create"),
-            },
-
-            {
-                path: "/package",
-                name: "package.index",
-                component: () => import("./../views/admin/package/index"),
-            },
-            {
-                path: "/package/create",
-                name: "package.create",
-                component: () => import("./../views/admin/package/create"),
-            },
-            {
-                path: "/package/:id",
-                name: "package.show",
-                component: () => import("./../views/admin/package/view"),
-            },
-            {
-                path: "/package/:id/edit",
-                name: "package.edit",
-                component: () => import("./../views/admin/package/create"),
-            },
             // ------------------Invoice PORTION------------------
             {
                 path: "/invoice",
@@ -750,30 +707,7 @@ const routes = [
                 component: () =>
                     import("./../views/admin/bulkdataimport/client"),
             },
-            // ------------------UplinkProvider PORTION------------------
-            {
-                path: "/uplinkProvider",
-                name: "uplinkProvider.index",
-                component: () =>
-                    import("./../views/admin/uplinkProvider/index"),
-            },
-            {
-                path: "/uplinkProvider/create",
-                name: "uplinkProvider.create",
-                component: () =>
-                    import("./../views/admin/uplinkProvider/create"),
-            },
-            {
-                path: "/uplinkProvider/:id",
-                name: "uplinkProvider.show",
-                component: () => import("./../views/admin/uplinkProvider/view"),
-            },
-            {
-                path: "/uplinkProvider/:id/edit",
-                name: "uplinkProvider.edit",
-                component: () =>
-                    import("./../views/admin/uplinkProvider/create"),
-            },
+
             // ------------------Account PORTION------------------
             {
                 path: "/account",
@@ -1116,6 +1050,27 @@ const routes = [
                 path: "/withdrawl/:id/edit",
                 name: "withdrawl.edit",
                 component: () => import("./../views/admin/withdrawl/create"),
+            },
+            // ------------------Workorder PORTION------------------
+            {
+                path: "/workorder",
+                name: "workorder.index",
+                component: () => import("./../views/admin/workorder/index"),
+            },
+            {
+                path: "/workorder/create",
+                name: "workorder.create",
+                component: () => import("./../views/admin/workorder/create"),
+            },
+            {
+                path: "/workorder/:id",
+                name: "workorder.show",
+                component: () => import("./../views/admin/workorder/view"),
+            },
+            {
+                path: "/workorder/:id/edit",
+                name: "workorder.edit",
+                component: () => import("./../views/admin/workorder/create"),
             },
 
             // ------------------Report PORTION------------------
