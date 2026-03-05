@@ -1,0 +1,109 @@
+.album-list-area {
+    .album_item {
+        .img {
+            border-radius: 10px;
+            overflow: hidden;
+
+            img {
+                object-fit: cover;
+                object-position: center;
+            }
+
+            .overlay {
+                width: 100%;
+                height: 100%;
+                position: absolute;
+                top: 0;
+                left: 0;
+                background-color: rgba(0, 0, 0, 0.6);
+                transition: $transition;
+                visibility: hidden;
+                opacity: 0;
+            }
+        }
+
+        .album_title {
+            @include font(15px, 500);
+            margin-top: 13px;
+            text-align: center;
+        }
+
+        .back_or_add_btn {
+            position: absolute;
+            bottom: 55px;
+            right: -80px;
+            transform: rotate(-90deg);
+            transition: $transition;
+            visibility: hidden;
+            opacity: 0;
+            transition-delay: 0.1s;
+        }
+
+        &:hover {
+            .overlay {
+                visibility: visible;
+                opacity: 1;
+            }
+
+            .album_info {
+                visibility: visible;
+                opacity: 1;
+            }
+
+            .back_or_add_btn {
+                visibility: visible;
+                opacity: 1;
+                right: -40px;
+            }
+        }
+    }
+
+    .album_icon {
+        top: 8px;
+        right: 8px;
+        color: $black;
+        background-color: #D3E3FD;
+        border-radius: 10px;
+        width: 44px;
+        height: 44px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+}
+
+.album_info {
+    transition: $transition;
+    visibility: hidden;
+    opacity: 0;
+    width: 152px;
+
+    .action_box {
+        background-color: #f7faff;
+        text-align: center;
+        padding: 3px 3px;
+        border-radius: 5px;
+    }
+
+    .album_action_btn {
+        margin: 0 0;
+        width: 33px;
+        height: 33px;
+        background-color: transparent;
+        border-radius: 50%;
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+        transition: none;
+
+        &:hover {
+            background-color: #D3E3FD;
+        }
+
+        .icon {
+            width: 18px !important;
+            height: 18px !important;
+            color: $black;
+        }
+    }
+}

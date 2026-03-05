@@ -1,0 +1,20 @@
+<?php
+
+/**
+ * @Quill Information Technology
+ */
+
+namespace {{ namespace }};
+
+use App\Models\Base\BaseModel;
+
+class {{ class }} extends BaseModel
+{
+    protected $guarded = ['id'];
+    
+    protected $logName = "{{ class }}";
+
+    // file image push
+
+    // date format
+}

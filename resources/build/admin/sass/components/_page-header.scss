@@ -1,0 +1,11 @@
+.page_header {
+  margin-bottom: 14px;
+  .form_card_title {
+    @include font(18px, 500);
+  }
+}
+.right_page_header{
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}

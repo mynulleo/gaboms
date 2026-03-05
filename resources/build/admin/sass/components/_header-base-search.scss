@@ -1,0 +1,116 @@
+.header_base_search {
+    flex-grow: 1;
+
+    .input_select {
+        width: 150px;
+
+        select {
+            background-color: #EAF1FB;
+            border: 0;
+            border-radius: 40px !important;
+            height: 38px;
+            padding: 0 14px;
+            @include font(14px, 500);
+            cursor: pointer;
+        }
+    }
+
+    .search_box {
+        flex-grow: 1;
+
+        input {
+            width: 100%;
+            height: 38px;
+            border-radius: 50px;
+            background-color: #EAF1FB;
+            border: 1px solid transparent;
+            padding: 0 16px;
+            padding-left: 50px;
+            transition: $transition;
+
+            // &:focus {
+            //     border-color: $secondary;
+            //     box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.1);
+            //     border-color: transparent;
+            // }
+        }
+
+        .bs-checkbox {
+            width: 1rem;
+            height: 1rem;
+            border-radius: .25em;
+            background-color: unset;
+            border: 1px solid #dee2e6;
+            padding: unset;
+            padding-left: unset;
+
+            &:checked {
+                background-color: #0d6efd;
+                border-color: #0d6efd;
+            }
+        }
+
+        .search_btn {
+            left: 14px;
+            color: #858585;
+
+            svg {
+                width: 20px;
+                height: 20px;
+            }
+        }
+
+        .reset_advance_filter {
+            top: 50%;
+            right: 40px;
+            transform: translateY(-50%);
+            width: 26px;
+            height: 26px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 50%;
+            background-color: transparent;
+
+            &:hover {
+                background-color: $secondary;
+            }
+        }
+
+        .reset_advance_filter_two {
+            right: 7px;
+        }
+
+        .advance_filter {
+            position: absolute;
+            top: 50%;
+            right: 0px;
+            transform: translateY(-50%);
+            border: 0;
+            color: #747474;
+            width: 38px;
+            height: 38px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 50%;
+            background-color: transparent;
+
+            &:hover {
+                background-color: $secondary;
+                color: $white;
+            }
+
+            svg {
+                width: 20px;
+                height: 20px;
+            }
+        }
+    }
+
+    .focus_bg {
+        background-color: #FFFCC8 !important;
+        box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.1);
+        border-color: transparent;
+    }
+}

@@ -1,0 +1,130 @@
+.pagination_action {
+  margin-bottom: 14px;
+
+  .top_pagination {
+    .pagination {
+      p {
+        color: $black;
+        font-size: 15px;
+        font-weight: 400;
+        line-height: normal;
+      }
+    }
+
+    .prev_next_btn {
+      .btns {
+        color: #BCBCBC;
+        margin: 0 12px;
+
+        &:hover {
+          color: #000000;
+        }
+      }
+
+      .active {
+        color: #000000;
+      }
+    }
+
+    .show_item {
+      .sh {
+        @include font(14px, 500);
+        color: $black;
+        opacity: 0.6;
+      }
+
+      select {
+        height: 35px;
+        @include font(14px, 500);
+        cursor: pointer;
+        border: 1px solid #E3E3E3;
+      }
+    }
+  }
+
+  .print_action {
+    .p_btn {
+      width: 32px;
+      height: 32px;
+      background-color: #F2F2F2;
+      // display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 50%;
+      color: #4B4B4B;
+      margin-left: 5px;
+      border: 0;
+
+      &:hover {
+        background-color: $secondary;
+        color: $white
+      }
+
+      svg {
+        width: 18px;
+        height: 18px;
+
+      }
+    }
+  }
+}
+
+// base pagination
+.base_pagination {
+  margin-top: 14px;
+
+  .number {
+    @include font(15px, 500);
+    color: $black;
+  }
+
+  ul {
+    display: inline-flex;
+    gap: 3px;
+
+    li {
+      a {
+        width: 32px;
+        height: 32px;
+        background-color: transparent;
+        border: 1px solid $tertiary;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: $black;
+        @include font(14px, 500);
+
+        svg {
+          width: 19px;
+          height: 19px;
+        }
+
+        &:hover {
+          background-color: $secondary;
+          border-color: $secondary;
+          color: $white;
+        }
+
+        &:active {
+          color: $white;
+        }
+      }
+    }
+
+    .rest {
+      align-self: center;
+      margin: 0 3px; // চাইলে gap এর জন্য এটা বাদ দেওয়া যায়
+
+      a {
+        border: 0;
+      }
+    }
+
+    li.active a {
+      background-color: $secondary;
+      border-color: $secondary;
+      color: $white;
+    }
+  }
+}

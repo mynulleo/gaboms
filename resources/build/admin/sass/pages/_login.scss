@@ -1,0 +1,91 @@
+.login_area {
+    .container {
+        min-height: 100vh;
+    }
+
+    .login_main {
+        max-width: 511px;
+        width: 100%;
+        border-radius: 20px;
+        background-color: $white;
+        box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.16);
+
+        .login {
+            padding: 40px;
+
+            .logo {
+                margin-bottom: 20px;
+
+                .name {
+                    color: $black;
+                    font-size: 80px;
+                    font-weight: 700;
+                    line-height: normal;
+                    margin-top: 5px;
+                }
+            }
+
+            .forgot {
+                color: $black;
+                font-size: 15px;
+                font-weight: 500;
+                line-height: normal;
+
+                &:hover {
+                    text-decoration: underline;
+                }
+            }
+        }
+    }
+}
+
+.show_hide_password {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 12px;
+    background-color: transparent;
+    border: 0;
+    color: #878787;
+    transition: $transition;
+
+    &:hover {
+        color: $black;
+    }
+
+    svg {
+        width: 22px;
+        height: 22px;
+    }
+}
+
+@media (max-width:1399.98px) {
+    .login_area .login_main {
+        max-width: 425px;
+    }
+
+    .login_area .login_main .login {
+        padding: 20px 40px;
+    }
+}
+
+@media (max-width:991.98px) {
+    .login_area .login_main {
+        max-width: 4000px;
+        padding: 40px;
+        padding: 20px;
+        margin: 40px 0;
+    }
+
+    .login_area .login_main .image {
+        display: none;
+    }
+
+    .login_area .login_main {
+        padding: 0;
+    }
+
+    .login_area .login_main .login {
+        padding: 60px 30px;
+    }
+}

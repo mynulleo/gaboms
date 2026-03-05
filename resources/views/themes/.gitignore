@@ -1,0 +1,11 @@
+# Ignore everything
+*
+
+# Allow .gitignore itself
+!.gitignore
+
+# Allow the default folder
+!/default/
+
+# Ensure all files inside default/ are tracked
+!/default/**

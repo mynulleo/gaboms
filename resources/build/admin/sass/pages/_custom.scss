@@ -1,0 +1,74 @@
+/*==================================================
+=            Variables (Design Tokens)             =
+==================================================*/
+$white: #ffffff;
+$light-gray: #f1f1f1;
+
+
+/*==================================================
+=            Top Message Dropdown Box               =
+==================================================*/
+.x_top_message_dropdown_box {
+
+    .top {
+        padding-bottom: 0 !important;
+    }
+
+    ul {
+        margin: 0;
+        padding: 0;
+
+        li {
+            padding-left: 0 !important;
+            margin-bottom: 0 !important;
+            list-style: none;
+
+            &::before {
+                display: none;
+            }
+
+            h4,
+            p {
+                margin-bottom: 0;
+            }
+        }
+    }
+}
+
+
+/*==================================================
+=            Invoice Layout                         =
+==================================================*/
+.invoice-box {
+    background-color: $white;
+    padding: 30px;
+    border-radius: 8px;
+}
+
+.invoice-title {
+    font-size: 28px;
+    font-weight: 700;
+}
+
+
+/*==================================================
+=            Print Styles                           =
+==================================================*/
+@media print {
+
+    body {
+        background: none;
+    }
+
+    .invoice-box {
+        box-shadow: none;
+        padding: 0;
+    }
+
+
+    @page {
+        size: A4 auto;
+        margin: 10mm;
+    }
+
+}

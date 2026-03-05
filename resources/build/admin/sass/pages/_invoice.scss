@@ -1,0 +1,168 @@
+.invoice-wrapper {
+    display: flex;
+    justify-content: center;
+
+    .invoice-box {
+        width: 100%;
+        max-width: 720px; // A4 approx width in px for screen
+        background: #fff;
+        border-radius: 8px;
+        font-size: 14px;
+
+        .invoice-title {
+            font-size: 1.6rem;
+            letter-spacing: 1px;
+        }
+
+        .invoice-from,
+        .invoice-to {
+            img {
+                max-width: 120px;
+                height: auto;
+                margin-bottom: 6px;
+            }
+
+            p {
+                font-size: 0.85rem;
+                line-height: 1.3;
+                margin-bottom: 2px;
+            }
+        }
+
+        table {
+            font-size: 0.85rem;
+
+            th,
+            td {
+                padding: 0.45rem 0.5rem;
+                vertical-align: middle;
+            }
+
+            thead {
+                th {
+                    background: #f5f5f5;
+                    font-weight: 600;
+                    white-space: nowrap;
+                }
+            }
+        }
+
+        .table-responsive {
+            overflow-x: auto;
+        }
+
+        .summary-table {
+
+            th,
+            td {
+                padding: 0.4rem 0.5rem;
+                font-size: 0.9rem;
+            }
+
+            tr.fw-bold {
+                border-top: 2px solid #000;
+            }
+        }
+
+        .footer-note {
+            font-size: 0.8rem;
+            color: #666;
+        }
+    }
+}
+
+/* ===== Responsive Tweaks ===== */
+@media (max-width: 768px) {
+    .invoice-wrapper {
+        .invoice-box {
+            font-size: 13px;
+
+            .invoice-title {
+                font-size: 1.4rem;
+            }
+
+            .invoice-from,
+            .invoice-to {
+                text-align: left !important;
+                margin-bottom: 10px;
+            }
+
+            table {
+                font-size: 0.75rem;
+
+                th,
+                td {
+                    padding: 0.35rem 0.4rem;
+                }
+            }
+        }
+    }
+}
+
+/* ===== Print (A4) ===== */
+@media print {
+    body {
+        background: #fff;
+    }
+
+    .invoice-wrapper {
+        margin: 0;
+        padding: 0;
+        display: block; // Remove flex to avoid centering issues
+    }
+
+    .invoice-box {
+        box-shadow: none !important;
+        border: 0;
+        width: 18cm !important; // Fixed width safe for default margins (~1cm each side on A4=21cm)
+        max-width: none !important;
+        margin: 0 auto !important; // Center horizontally
+        font-size: 10pt !important; // Use pt for print consistency (adjusted down from 12px)
+
+        .invoice-title {
+            font-size: 1.2rem;
+            text-align: center !important;
+            color: #000 !important;
+        }
+
+        table {
+            font-size: 9pt !important;
+
+            th,
+            td {
+                padding: 0.3rem 0.35rem;
+            }
+        }
+
+        .invoice-from {
+            img {
+                max-width: 3cm;
+            }
+
+            p {
+                font-size: 9pt;
+            }
+        }
+
+        .invoice-to {
+            p {
+                font-size: 9pt;
+            }
+
+            text-align: right !important;
+        }
+
+        .footer-note {
+            font-size: 8pt;
+        }
+    }
+
+    /* Hide UI junk */
+    .btn,
+    .no-print,
+    nav,
+    header,
+    footer {
+        display: none !important;
+    }
+}

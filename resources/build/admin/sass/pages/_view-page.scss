@@ -1,0 +1,136 @@
+.viewer_devider {
+    height: 14px;
+}
+
+.view_page {
+    table {
+        tr {
+            &:hover {
+                td {
+                    background-color: unset !important;
+                }
+            }
+        }
+    }
+
+    .view_file {
+        margin-top: 10px;
+
+
+        .view_file_item {
+            background-color: #F6F8FC;
+            border: 1px solid #E1E3E1;
+            border-radius: 5px;
+            padding: 16px 22px;
+            height: 100%;
+
+            .img {
+                width: 100px;
+                height: 100px;
+                border-radius: 50%;
+                margin: 0 auto;
+                border: 1px solid #cacaca;
+                overflow: hidden;
+
+                img {
+                    height: 100%;
+                    object-fit: contain;
+                    object-position: center;
+                    width: 100%;
+                }
+            }
+
+            p {
+                color: #303030;
+                font-size: 14px;
+                font-weight: 500;
+                line-height: normal;
+                margin-top: 15px;
+            }
+            .action_box{
+                border: 1px solid #ccc;
+            }
+            &:hover {
+                .overlay {
+                    visibility: visible;
+                    opacity: 1;
+                }
+
+                .album_info {
+                    visibility: visible;
+                    opacity: 1;
+                }
+
+                .back_or_add_btn {
+                    visibility: visible;
+                    opacity: 1;
+                    right: -40px;
+                }
+            }
+        }
+    }
+}
+
+.viewer_action_btn {
+    .p_btn {
+        width: 32px;
+        height: 32px;
+        background-color: #F2F2F2;
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 50%;
+        color: #4B4B4B;
+        margin-left: 5px;
+        border: 0;
+
+        &:hover {
+            background-color: $secondary;
+        }
+
+        svg {
+            width: 18px;
+            height: 18px;
+        }
+    }
+}
+
+@media (max-width:1399.98px) {
+    .view_page .view_file .view_file_item .img {
+        width: 80px;
+        height: 80px;
+    }
+
+    .view_page .view_file .view_file_item {
+        padding: 14px;
+    }
+
+    .view_page .view_file .view_file_item p {
+        font-size: 13px;
+    }
+}
+
+.view_t_head {
+    width: 35%;
+}
+
+@media (max-width:1399.98px) {
+
+    .view_t_head {
+        width: 45%;
+    }
+}
+
+@media (max-width:1199.98px) {
+
+    .view_t_head {
+        width: 35%;
+    }
+}
+
+
+@media (max-width:575.98px) {
+    .viewer_action_btn {
+        display: none;
+    }
+}

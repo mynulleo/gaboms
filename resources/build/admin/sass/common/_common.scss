@@ -1,0 +1,270 @@
+@import "../variable/variable";
+@import "../mixin/font";
+@import "../mixin/line-limit";
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    outline: none;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+    margin: 0;
+    padding: 0;
+}
+
+span {
+    display: inline-block;
+}
+
+a {
+    display: inline-block;
+    text-decoration: none;
+}
+
+a:hover,
+a:focus {
+    text-decoration: none;
+}
+
+ul,
+ol {
+    margin: 0;
+    padding: 0;
+}
+
+a,
+button {
+    transition: all 0.3s ease-out 0s;
+}
+
+body {
+    overflow-x: hidden;
+    overflow-y: scroll;
+    @include font(15px, 400);
+    font-family: "Roboto", sans-serif;
+    color: $black;
+    line-height: normal;
+    background-color: #F6F8FC;
+    // scrollbar-width: thin;
+}
+
+
+::selection {
+    background-color: $primary;
+    color: $white;
+}
+
+.theme_btn {
+    color: $white;
+    font-size: 15px;
+    font-weight: 700;
+    line-height: normal;
+    text-transform: uppercase;
+    padding: 13px 27px;
+    border-radius: 40px;
+    background-color: $tertiary;
+    border: 0;
+    transition: 0.2s;
+
+    &:hover {
+        transform: translateY(-3px);
+        box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+    }
+}
+
+.p_1 {
+    @include font(15px, 400);
+    color: $black;
+    line-height: 24px;
+}
+
+.help_btn {
+    background-color: #178521;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: 0;
+    color: $white;
+
+    .icon {
+        width: 22px;
+        height: 22px;
+    }
+}
+
+.row {
+    --bs-gutter-x: 16px;
+}
+
+.custom_row {
+    --bs-gutter-y: 30px;
+}
+
+.mt-30 {
+    margin-top: 30px
+}
+
+.mb-30 {
+    margin-bottom: 30px
+}
+
+.mb-40 {
+    margin-bottom: 40px
+}
+
+.mt-40 {
+    margin-top: 40px
+}
+
+.mb-50 {
+    margin-bottom: 50px
+}
+
+.mt-50 {
+    margin-top: 50px
+}
+
+.mb-60 {
+    margin-bottom: 60px
+}
+
+.mt-60 {
+    margin-top: 60px
+}
+
+// line limit start
+.line-limit-1 {
+    @include line_limit (1 !important);
+}
+
+.line-limit-2 {
+    @include line_limit (2 !important);
+}
+
+.line-limit-3 {
+    @include line_limit (3 !important);
+}
+
+.line-limit-4 {
+    @include line_limit (4 !important);
+}
+
+.line-limit-6 {
+    @include line_limit (6 !important);
+}
+
+.line-limit-7 {
+    @include line_limit (7 !important);
+}
+
+.line-limit-8 {
+    @include line_limit (8 !important);
+}
+
+.line-limit-9 {
+    @include line_limit (9 !important);
+}
+
+.line-limit-10 {
+    @include line_limit (10 !important);
+}
+
+// fullpage loader
+.fullpage_loader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: $white;
+    z-index: 99999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .loader {
+        width: 50px;
+        --b: 8px;
+        aspect-ratio: 1;
+        border-radius: 50%;
+        padding: 1px;
+        background: conic-gradient(#0000 10%, $tertiary) content-box;
+        -webkit-mask:
+            repeating-conic-gradient(#0000 0deg, #000 1deg 20deg, #0000 21deg 36deg),
+            radial-gradient(farthest-side, #0000 calc(100% - var(--b) - 1px), #000 calc(100% - var(--b)));
+        -webkit-mask-composite: destination-in;
+        mask-composite: intersect;
+        animation: l4 1s infinite steps(10);
+    }
+
+    @keyframes l4 {
+        to {
+            transform: rotate(1turn)
+        }
+    }
+}
+
+// table loader New css
+.table_loader {
+    height: 80px;
+    margin: 0 auto;
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: calc(100vh - 228px);
+
+    .loader {
+        height: 4px;
+        width: 100px;
+        --c: no-repeat linear-gradient(#1A73E8 0 0);
+        background: var(--c), var(--c), #e0e0e0;
+        background-size: 60% 100%;
+        animation: l16 3s infinite;
+    }
+
+    @keyframes l16 {
+        0% {
+            background-position: -150% 0, -150% 0
+        }
+
+        66% {
+            background-position: 250% 0, -150% 0
+        }
+
+        100% {
+            background-position: 250% 0, 250% 0
+        }
+    }
+}
+
+.cursor-pointer {
+    cursor: pointer;
+}
+
+.table_loader_only {
+    td {
+        &:hover {
+            background-color: $white !important;
+        }
+    }
+}
+
+.z-top {
+    z-index: 9999999 !important;
+}
+
+.x_time_picker {
+    .form-control {
+        width: 100% !important;
+        height: 42px !important;
+    }
+}

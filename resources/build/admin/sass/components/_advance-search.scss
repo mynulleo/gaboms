@@ -1,0 +1,38 @@
+.advance_search_result {
+    width: 100%;
+    background-color: $white;
+    position: absolute;
+    top: 100%;
+    margin-top: 1px;
+    left: 0;
+    border: 1px solid #E3E3E3;
+    z-index: 999;
+    padding: 14px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    display: none;
+
+    .form-label {
+        font-size: 12px;
+        margin-bottom: 4px;
+    }
+
+    .vs__dropdown-toggle .vs__search {
+        font-size: 13px;
+    }
+
+    .input-group {
+        input {
+            background-color: $white;
+            padding-left: 16px;
+            border: 1px solid #E1E3E1;
+
+            &:focus {
+                border-color: $tertiary !important;
+            }
+        }
+    }
+}
+
+.show.advance_search_result {
+    display: block;
+}

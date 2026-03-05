@@ -1,0 +1,207 @@
+<template>
+    <index-page :defaultTable="false" :show_status="false">
+        <template v-slot:search-field>
+            <v-select-container title="Category" field="category_id" col="3 mb-3">
+                <v-select v-model="search_data.category_id" label="title" :reduce="obj => obj.id" :options="categories"
+                    placeholder="--Select One--" :closeOnSelect="true" />
+            </v-select-container>
+            <v-select-container title="Item" :field="search_data.item_id" col="3 mb-3">
+                <v-select v-model="search_data.item_id" label="title" :reduce="(obj) => obj.id" :options="items"
+                    placeholder="--Select One--" :closeOnSelect="true"></v-select>
+            </v-select-container>
+            <date-picker id="date1" field="search_data.start_date" name="start_date" v-model="search_data.start_date"
+                title="Start Date (From)" placeholder="dd/mm/yyyy" col="2"></date-picker>
+            <date-picker id="date3" field="search_data.end_date" name="end_date" v-model="search_data.end_date"
+                title="Start Date (To)" placeholder="dd/mm/yyyy" col="2"
+                :disableToDates="search_data.start_date"></date-picker>
+        </template>
+        <template v-slot:table-list>
+            <div class="col-md-12">
+                <div class="d-flex gap-3 align-items-center justify-content-end">
+                    <div class="print_action text-end">
+                        <button class="p_btn" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Print"
+                            v-x-tooltip @click="print('printArea', model)">
+                            <i class="fas fa-print"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="my-5" id="printArea">
+                <!-- <pre>{{ datas }}</pre> -->
+                <!-- 🧾 Report Header (Visible in Print) -->
+                <div class="text-center mb-2 report-title">
+                    <h3 class="fw-bold">{{ $root.site.title }}.</h3>
+                    <p class="mb-1">{{ $root.site.address }}</p>
+                    <p>Email: {{ $root.site.contact_email }} | Phone: {{ $root.site.mobile1 }}</p>
+                </div>
+
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <div>
+                        <h5 class="fw-bold mb-1">Item Ladger</h5>
+                        <small class="text-muted">Period: {{ search_data.start_date }} to {{ search_data.end_date
+                            }}</small>
+                    </div>
+                    <div class="text-end">
+                        <small class="text-muted">Report Date: <strong>{{ reportDate }}</strong></small>
+                    </div>
+                </div>
+
+                <!-- 📊 Income Table -->
+                <table class="table table-bordered align-middle">
+                    <thead class="table-light">
+                        <tr class="fw-bold text-center">
+                            <th>#</th>
+                            <th>Transection Date</th>
+                            <th>Transection Type</th>
+                            <th>Reference No</th>
+                            <th>Stock In</th>
+                            <th>Stock Out</th>
+                            <th>Balance</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <template v-if="datas.length > 0">
+                            <tr v-for="(ladger, index) in datas" :key="index">
+                                <td>{{ index + 1 }}</td>
+                                <td>{{ ladger.transaction_date }}</td>
+                                <td>{{ ladger.transaction_type }}</td>
+                                <td>{{ ladger.reference_no }}</td>
+                                <td>{{ ladger.qty_in }}</td>
+                                <td>{{ ladger.qty_out }}</td>
+                                <td>{{ ladger.balance }}</td>
+                            </tr>
+                        </template>
+                        <template v-else>
+                            <tr>
+                                <td colspan="7" class="text-md-center">
+                                    <span v-if="search_data.item_id">
+                                        No ledger data available. Please select an another item.
+                                    </span>
+                                    <span v-else>
+                                        Please select an item to view its ledger report.
+                                    </span>
+                                </td>
+                            </tr>
+                        </template>
+                    </tbody>
+                </table>
+
+                <!-- 📌 Footer Note -->
+                <div class="mt-4 small text-muted">
+                    <p>Generated by: <strong>Admin</strong></p>
+                    <p>This report is system generated and does not require signature.</p>
+                </div>
+
+            </div>
+        </template>
+    </index-page>
+</template>
+
+<script>
+import axios from "axios";
+import moment from "moment";
+
+const tableColumns = [{ field: "status", title: "Status", align: "center" }];
+const json_fields = {
+    Title: "Hello",
+};
+const model = "dailyReport";
+
+export default {
+    data() {
+        return {
+            model: model,
+            page_title: "",
+            reportDate: moment().format('D MMMM, YYYY'),
+            json_fields: json_fields,
+            search_data: {
+                category_id: null,
+                item_id: null,
+                start_date: moment().startOf('month').format('D MMMM, YYYY'),
+                end_date: moment().endOf('month').format('D MMMM, YYYY')
+            },
+            table: {
+                columns: tableColumns,
+                routes: {},
+                datas: [],
+                meta: [],
+                links: [],
+            },
+            datas: [], // Store the daily report data
+            categories: [],  // Store account heads for the select dropdown
+            items: [], // Store residents for the select dropdown
+        };
+    },
+    watch: {
+        'search_data.category_id': {
+            handler() {
+                this.onCategoryChange();
+            },
+            deep: true
+        }
+    },
+    provide() {
+        return {
+            validate: this.validation,
+            model: this.model,
+            search_data: this.search_data,
+            table: this.table,
+            json_fields: this.json_fields,
+            search: this.search,
+            resetSearchData: this.resetSearchData,
+        };
+    },
+
+    methods: {
+        search() {
+            // this.get_paginate(this.model, this.search_data);
+            this.getStockLadger();
+        },
+
+        onCategoryChange() {
+            const category_id = this.search_data.category_id;
+
+            if (!category_id) {
+                this.items = [];
+                this.search_data.item_id = null;
+                return;
+            }
+
+            axios.get(`getitemsbycategory/${category_id}`)
+                .then((response) => {
+                    this.items = response.data;
+                    this.search_data.item_id = null;
+                })
+                .catch(() => {
+                    this.items = [];
+                });
+        },
+        getCategories() {
+            let module = 'Item';
+            axios.get(`getcategories/${module}`)
+                .then((response) => {
+                    this.categories = response.data;
+                });
+        },
+
+        getStockLadger() {
+            axios
+                .get(`report/itemladger/`, { params: this.search_data })
+                .then((res) => {
+                    this.datas = res.data
+                })
+        },
+        // Capitalize the first letter of a string
+        ucfirst(str) {
+            if (!str) return "";
+            return str.charAt(0).toUpperCase() + str.slice(1);
+        },
+    },
+
+    created() {
+        this.getCategories();
+    },
+
+    validators: {},
+};
+</script>

@@ -1,0 +1,82 @@
+.base_tabs .nav-pills {
+  border-bottom: 1px solid #E1E3E1;
+  display: flex;
+  gap: 0px;
+}
+
+.base_tabs .nav-item {
+  flex-grow: 1;
+  max-width: 320px;
+}
+
+.base_tabs .nav-link {
+  display: flex;
+  align-items: center;
+  background-color: transparent;
+  padding: 10px 10px;
+  width: 100%;
+  border-radius: 0;
+  border-bottom: 3px solid transparent;
+}
+
+
+.base_tabs .nav-link.active {
+  background-color: transparent;
+  border-color: $tertiary;
+}
+
+.base_tabs .nav-link:hover {
+  background-color: #F4F4F4 !important;
+}
+
+.base_tabs .nav-link .icon {
+  flex: 0 0 auto;
+  /* margin-right: 18px; */
+  position: relative;
+  top: -2px;
+}
+
+.base_tabs .nav-link .text {
+  margin-left: 10px;
+}
+
+.base_tabs .nav-link .icon .svg_icon {
+  color: $black;
+  position: relative;
+  top: 1px;
+}
+
+.base_tabs .nav-link .title {
+  font-size: 18px;
+  font-weight: 600;
+  color: $black;
+  text-transform: capitalize;
+}
+
+.base_tabs .nav-link .title small {
+  font-size: 11px;
+  font-weight: 500;
+  color: $white;
+  padding: 4px 8px;
+  border-radius: 50px;
+  background-color: $tertiary;
+  margin-left: 10px;
+  position: relative;
+  tab-size: -2px;
+}
+
+.base_tabs .nav-link.active .icon .svg_icon {
+  stroke: $tertiary;
+}
+
+.base_tabs .nav-link .icon i {
+  color: $black !important;
+}
+
+.base_tabs .nav-link.active .icon i {
+  color: $tertiary !important;
+}
+
+.base_tabs .nav-link.active .title {
+  color: $tertiary;
+}
