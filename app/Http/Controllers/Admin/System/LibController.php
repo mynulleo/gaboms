@@ -13,6 +13,7 @@ use App\Models\District;
 use App\Models\Employee;
 use App\Models\Supplier;
 use App\Models\Designation;
+use App\Models\Currency;
 use App\Models\System\Menu;
 use App\Models\Organization;
 use Illuminate\Support\Facades\DB;
@@ -90,7 +91,8 @@ class LibController extends Controller
             'mbankings' => $this->getMbankings(),
             'bandwidthtypes' => $this->getBandwidthTypes(),
             'clienttypes' => $this->getClientTypes(),
-            'service_modules' => $this->getServiceModule()
+            'service_modules' => $this->getServiceModule(),
+            'currencies' => $this->getCurrencies()
         ];
     }
 
@@ -391,6 +393,11 @@ class LibController extends Controller
     public function getDesignations()
     {
         return Designation::where('status', 'active')->get(['id', 'title']);
+    }
+
+    public function getCurrencies()
+    {
+        return Currency::where('status', 'active')->get(['id', 'short_name']);
     }
 
     public function getAreas($districtid = null)

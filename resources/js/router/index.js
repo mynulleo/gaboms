@@ -1004,6 +1004,27 @@ const routes = [
                 name: "bank.show",
                 component: () => import("./../views/admin/bank/view"),
             },
+            // ------------------Currency PORTION------------------
+            {
+                path: "/currency",
+                name: "currency.index",
+                component: () => import("./../views/admin/currency/index"),
+            },
+            {
+                path: "/currency/create",
+                name: "currency.create",
+                component: () => import("./../views/admin/currency/create"),
+            },
+            {
+                path: "/currency/:id",
+                name: "currency.show",
+                component: () => import("./../views/admin/currency/view"),
+            },
+            {
+                path: "/currency/:id/edit",
+                name: "currency.edit",
+                component: () => import("./../views/admin/currency/create"),
+            },
             {
                 path: "/bank/:id/edit",
                 name: "bank.edit",

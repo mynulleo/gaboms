@@ -91,10 +91,6 @@ class Invoice extends BaseModel
         return $this->hasMany(InvoiceMonth::class, 'invoice_id', 'id')->oldest('id');
     }
 
-    public function package()
-    {
-        return $this->belongsTo(Package::class);
-    }
 
     public function client()
     {
