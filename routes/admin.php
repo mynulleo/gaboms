@@ -183,7 +183,7 @@ Route::middleware(['auth:admin', 'tenantDB'])->group(function () {
         Route::resource('fundTransfer', App\Http\Controllers\Admin\FundTransferController::class);
         Route::resource('withdrawl', App\Http\Controllers\Admin\WithdrawlController::class);
         Route::resource('workorder', App\Http\Controllers\Admin\WorkorderController::class);
-        Route::resource('chalan', App\Http\Controllers\Admin\ChalanController::class);
+        Route::resource('currency', App\Http\Controllers\Admin\CurrencyController::class);
 
         //Report 
         Route::get('report/itemladger', [App\Http\Controllers\Admin\ReportController::class, 'itemladger'])->name('report.itemladger');
