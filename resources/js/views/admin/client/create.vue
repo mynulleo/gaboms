@@ -1,6 +1,6 @@
 <template>
   <create-form @onSubmit='submit'>
-    <div class="col-9">
+    <div class="col-12">
       <fieldset>
         <span class="legend">Office Info</span>
         <div class="row g-3">
@@ -10,79 +10,26 @@
             :options='$root.global.clienttypes' placeholder='--Select One--' :closeOnSelect='true' col="3"
             :req='true' />
           <Input v-model='data.clientid' field='data.clientid' col="3" title='Client ID' :req='false' />
-          <div class="col-md-12"></div>
-          <Select title='Service' v-model='data.service_id' field='data.service_id' label='title'
-            :reduce='(obj) => obj.id' :options='$root.global.services' placeholder='--Select One--'
-            :closeOnSelect='true' col="2" :required='true' />
-          <Select title='Package' v-model='data.package_id' field='data.package_id' label='title'
-            :reduce='(obj) => obj.id' :options='packages' placeholder='--Select One--' :closeOnSelect='true' col="2"
-            :required='false' />
           <Select title='District' v-model='data.district_id' field='data.district_id' label='district_name'
             :reduce='(obj) => obj.id' col="2" :options='$root.global.districts' placeholder='--Select One--'
             :closeOnSelect='true' :required='true' />
           <Select title='Area' v-model='data.area_id' field='data.area_id' label='area_name' :reduce='(obj) => obj.id'
             :options='areas' col="2" placeholder='--Select One--' :closeOnSelect='true' :required='true' />
-          <SwitchBoolean v-model='data.is_commission' field='data.is_commission' title='Is Commission' on-label='Yes'
-            off-label='No' col="3" :req='true'>
-          </SwitchBoolean>
-        </div>
-      </fieldset>
-    </div>
-    <div class="col-3">
-      <fieldset>
-        <span class="legend">Service Info</span>
-        <div class="table-responsive">
-          <table class="table table-striped">
-            <tbody>
-              <tr>
-                <th width="45%">Service Name</th>
-                <th width="5%">:</th>
-                <td>{{ data.service?.title }}</td>
-              </tr>
-              <tr>
-                <th>Auto Invoice</th>
-                <th width="5%">:</th>
-                <td>{{ data.service?.auto_invoice ? 'Yes' : 'No' }}</td>
-              </tr>
-              <tr>
-                <th>Module</th>
-                <th width="5%">:</th>
-                <td>{{ data.service?.module ?? '' }}</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </fieldset>
-    </div>
-    <div class="col-12">
-      <fieldset class="mt-3 mb-3">
-        <span class="legend">Client Info</span>
-        <div class="row g-3">
-          <Input v-model='data.org_name' v-if="data.service_id == 5" field='data.org_name' title='Org Name' col="8"
-            :req='false' />
-          <Input v-model='data.name' field='data.name' title='Name' col="6" :req='true' />
-          <Input v-model='data.nid' field='data.nid' title='NID' col="2" :req='false' />
-          <Input v-model='data.mobile' field='data.mobile' title='Mobile' col="2" :req='true' />
-          <Input v-model='data.email' field='data.email' title='Email' col="2" :req='false' />
-          <Input v-model='data.address' field='data.address' title='Address' col="12" :req='false' />
-        </div>
-      </fieldset>
-    </div>
-    <div class="col-6">
-      <fieldset class="mt-3 mt-3">
-        <span class="legend">Aditional Information</span>
-        <div class="row g-3" v-if="data.type == 'New'">
-          <Select title='Employee' v-model='data.employee_id' field='data.employee_id' label='full_name'
-            :reduce='(obj) => obj.id' col="6" :options='$root.global.employees' placeholder='--Select One--'
-            :closeOnSelect='true' :required='false' :readonly="!data.is_commission" />
-          <Input v-model='data.ref_name' field='data.ref_name' col="6" title='Ref Name' :req='false'
-            :readonly="!data.is_commission" />
-          <Input v-model='data.commission_amount' field='data.commission_amount' col="12" title='Commission Amount'
-            :readonly="!data.is_commission" :req='false' />
-        </div>
-        <div class="row g-3" v-else>
-          <Input v-model='data.previous_due' field='data.previous_due' col="6" title='Previous Due' :req='false' />
+          <Input v-model='data.org_name' field='data.org_name' title='Organization Name' col="12" :req='false' />
           <Textarea v-model='data.note' field='data.note' col="12" title='Remarks' :req='false' />
+        </div>
+      </fieldset>
+    </div>
+
+    <div class="col-6">
+      <fieldset class="mt-3 mb-3">
+        <span class="legend">Contact Info</span>
+        <div class="row g-3">
+          <Input v-model='data.name' field='data.name' title='Name' col="6" :req='true' />
+          <Input v-model='data.nid' field='data.nid' title='NID' col="6" :req='false' />
+          <Input v-model='data.mobile' field='data.mobile' title='Mobile' col="6" :req='true' />
+          <Input v-model='data.email' field='data.email' title='Email' col="6" :req='false' />
+          <Input v-model='data.address' field='data.address' title='Address' col="12" :req='false' />
         </div>
       </fieldset>
     </div>

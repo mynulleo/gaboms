@@ -1,7 +1,7 @@
 <template>
   <view-page :defaultTable="false" :showCreateRoute="false" :showDeleteButton="false">
     <div class="row custom_row g-3">
-      <div class="col-md-6">
+      <div class="col-md-4">
         <fieldset>
           <span class="legend">Office Information</span>
           <div class="table-responsive">
@@ -42,7 +42,7 @@
           </div>
         </fieldset>
       </div>
-      <div class="col-md-6">
+      <div class="col-md-4">
         <fieldset>
           <span class="legend">Client Information</span>
           <div class="table-responsive">
@@ -74,6 +74,11 @@
                   <td>{{ data.address }}</td>
                 </tr>
                 <tr>
+                  <th>District</th>
+                  <th width="5%">:</th>
+                  <td>{{ data.district?.district_name }} ({{ data.area?.area_name }})</td>
+                </tr>
+                <tr>
                   <th>Status</th>
                   <th>:</th>
                   <td>{{ data.status }}</td>
@@ -84,53 +89,7 @@
           </div>
         </fieldset>
       </div>
-      <div class="col-md-6">
-        <fieldset>
-          <span class="legend">Office Info</span>
-          <div class="table-responsive">
-            <table class="table table-striped">
-              <tbody>
-                <tr>
-                  <th>Service</th>
-                  <th width="5%">:</th>
-                  <td>{{ data.service?.title }}</td>
-                </tr>
-                <tr>
-                  <th>Package</th>
-                  <th width="5%">:</th>
-                  <td>{{ data.package?.title }}</td>
-                </tr>
-                <tr>
-                  <th>Bandwidth</th>
-                  <th width="5%">:</th>
-                  <td>{{ data.package?.bandwidth }} {{ data.package?.unit?.title }}</td>
-                </tr>
-                <tr>
-                  <th>Price</th>
-                  <th width="5%">:</th>
-                  <td>{{ data.package?.price }}</td>
-                </tr>
-                <tr>
-                  <th>Vat</th>
-                  <th width="5%">:</th>
-                  <td>{{ data.package?.vat }}</td>
-                </tr>
-                <tr>
-                  <th>Total</th>
-                  <th width="5%">:</th>
-                  <td>{{ data.package?.price + data.package?.vat }}</td>
-                </tr>
-                <tr>
-                  <th>District</th>
-                  <th width="5%">:</th>
-                  <td>{{ data.district?.district_name }} ({{ data.area?.area_name }})</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </fieldset>
-      </div>
-      <div class="col-md-6">
+      <div class="col-md-4">
         <fieldset>
           <span class="legend">Bank Info</span>
           <div class="table-responsive">

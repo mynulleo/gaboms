@@ -24,7 +24,7 @@ class ClientController extends BaseController
      */
     public function index(Request $request)
     {
-        $query  = Client::with(['service:id,title', 'package:id,title', 'area:id,area_name'])->latest();
+        $query  = Client::with(['area:id,area_name'])->latest();
 
         if (!empty($request->service_id)) {
             $query->where('service_id', $request->service_id);
@@ -98,24 +98,6 @@ class ClientController extends BaseController
 
                 $res = Client::create($data);
 
-                if ($res && $data['type'] == 'Existing') {
-
-                    $this->createPreviousDueInvoiceForNewClient($res->id, $data);
-                }
-
-                if ($res && !empty($data['is_commission']) && $data['is_commission'] == 1) {
-                    Commission::insertOrUpdateCommission([
-                        'employee_id'    => $data['employee_id'] ?? null,
-                        'client_id'      => $res->id,
-                        'referance_name' => $data['ref_name'] ?? null,
-                        'package_id'     => $data['package_id'],
-                        'percentage'     => $data['commission_percentage'] ?? null,
-                        'amount'         => $data['commission_amount'] ?? 0,
-                        'is_closed'      => 0,
-                        'status'         => 'active'
-                    ]);
-                }
-
                 return $this->responseReturn("create", $res);
             } catch (Exception $ex) {
                 return response()->json(['exception' => $ex->errorInfo ?? $ex->getMessage()], 422);
@@ -136,34 +118,11 @@ class ClientController extends BaseController
         }
         $client = Client::with(
             [
-                'service:id,title',
-                'package:id,title,bandwidth,unit_id,vat,price',
-                'package.unit:id,title',
                 'area:id,area_name',
                 'bank:id,bank_name',
                 'district:id,district_name',
             ]
         )->find($id);
-
-        if (empty($client->invoice_setup)) {
-
-            $client->invoice_setup = [
-                [
-                    'is_vat' => '',
-                    'type' => '',
-                    'category_id' => '',
-                    'linkid' => '',
-                    'bandwidth' => '',
-                    'unit_id' => '',
-                    'price' => '',
-                    'start_date' => '',
-                    'end_date' => '',
-                    'days' => '',
-                    'exclude_amount' => '',
-                    'include_amount' => '',
-                ]
-            ];
-        }
 
         return response()->json($client->toArray());
     }
@@ -199,27 +158,6 @@ class ClientController extends BaseController
                 // push the update text
                 $client->fill($data)->save();
 
-                if ($old_pre_due != $data['previous_due']) {
-                    $this->createPreviousDueInvoiceForNewClient($client->id, $data);
-                }
-
-                if (!empty($data['is_commission']) && $data['is_commission'] == 1) {
-                    Commission::insertOrUpdateCommission([
-                        'employee_id'    => $data['employee_id'] ?? null,
-                        'client_id'      => $client->id,
-                        'referance_name' => $data['ref_name'] ?? null,
-                        'package_id'     => $data['package_id'],
-                        'percentage'     => $data['commission_percentage'] ?? null,
-                        'amount'         => $data['commission_amount'] ?? 0,
-                        'is_closed'      => 0,
-                        'status'         => 'active'
-                    ]);
-                }
-
-                // if ($data['name'] != $oldclientname) {
-                //     $account = Account::updatePersonAccount('Client', $client->id, $client->clientid, $data['name']);
-                // }
-
                 return $this->responseReturn("update", $client);
             } catch (Exception $ex) {
                 return response()->json(['exception' => $ex->errorInfo ?? $ex->getMessage()], 422);
@@ -240,13 +178,11 @@ class ClientController extends BaseController
         return $this->responseReturn("delete", $res);
     }
 
-    public function getClients($service_id = null)
+    public function getClients()
     {
         $query = Client::where('status', 'active');
-        if (!empty($service_id)) {
-            $query->where('service_id', $service_id);
-        }
-        $data = $query->get(['id', 'name']);
+
+        $data = $query->get(['id', 'org_name']);
         return $data;
     }
 

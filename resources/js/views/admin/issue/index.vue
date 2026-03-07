@@ -10,7 +10,7 @@
           :options="$root.global.employees" placeholder="--Select Employee--" :closeOnSelect="true"></v-select>
       </v-select-container>
       <v-select-container title="Client" field="search_data.client_id" col="4">
-        <v-select v-model="search_data.client_id" label="name" :reduce="(obj) => obj.id" :options="clients"
+        <v-select v-model="search_data.client_id" label="org_name" :reduce="(obj) => obj.id" :options="clients"
           placeholder="--Select Employee--" :closeOnSelect="true"></v-select>
       </v-select-container>
       <date-picker id='searchfromissuedate' v-model='search_data.from_issue_date' field='search_data.from_issue_date'
