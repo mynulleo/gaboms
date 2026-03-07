@@ -2,7 +2,7 @@
     <index-page :defaultTable="false" :show_status="false">
         <template v-slot:search-field>
             <v-select-container title="Clints" field="client_id" col="3 mb-3">
-                <v-select v-model="search_data.client_id" label="name" :reduce="obj => obj.id" :options="clients"
+                <v-select v-model="search_data.client_id" label="org_name" :reduce="obj => obj.id" :options="clients"
                     placeholder="--Select One--" :closeOnSelect="true" />
             </v-select-container>
             <date-picker id='searchfromexpensedate' v-model='search_data.from_date' field='search_data.from_date'

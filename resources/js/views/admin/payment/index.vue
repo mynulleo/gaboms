@@ -2,7 +2,7 @@
   <index-page :show_status="false">
     <template v-slot:search-field>
       <v-select-container title="Select Client" field="search_data.client_id" col="3">
-        <v-select v-model="search_data.client_id" label="name" :reduce="(obj) => obj.id" :options="clients"
+        <v-select v-model="search_data.client_id" label="org_name" :reduce="(obj) => obj.id" :options="clients"
           placeholder="--Select Client--" :closeOnSelect="true"></v-select>
       </v-select-container>
       <v-select-container title="Select Supplier" field="search_data.supplier_id" col="3">

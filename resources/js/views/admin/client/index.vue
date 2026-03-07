@@ -1,14 +1,6 @@
 <template>
   <index-page>
     <template v-slot:search-field>
-      <v-select-container title="Select Service" field="search_data.service_id" col="3">
-        <v-select v-model="search_data.service_id" label="title" :reduce="(obj) => obj.id"
-          :options="$root.global.services" placeholder="--Select Service--" :closeOnSelect="true"></v-select>
-      </v-select-container>
-      <v-select-container title="Select Package" field="search_data.package_id" col="3">
-        <v-select v-model="search_data.package_id" label="title" :reduce="(obj) => obj.id" :options="packages"
-          placeholder="--Select Package--" :closeOnSelect="true"></v-select>
-      </v-select-container>
       <v-select-container title="Select District" field="search_data.district_id" col="3">
         <v-select v-model="search_data.district_id" label="district_name" :reduce="(obj) => obj.id"
           :options="$root.global.districts" placeholder="--Select District--" :closeOnSelect="true"></v-select>
@@ -32,8 +24,6 @@ const model = "client";
 const tableColumns = [
   { field: "clientid", title: "ClientID" },
   { field: "reg_date", title: "Reg Date" },
-  { field: "service_id", title: "Service", subfield: 'service.title' },
-  { field: "package_id", title: "Package", subfield: 'package.title' },
   { field: "name", title: "Name" },
   { field: "org_name", title: "Org Name" },
   { field: "mobile", title: "Mobile" },
@@ -44,7 +34,7 @@ const tableColumns = [
 ];
 
 const json_fields = {
-  "Regno": "regno", "Reg Date": "reg_date", "Service Id": "service_id", "Name": "name", "Org Name": "org_name", "Mobile": "mobile", "Email": "email", "Address": "address", "Area Id": "area_id", "Package Id": "package_id", "Ref Inside Office": "ref_inside_office", "Ref Name": "ref_name", "Employee Id": "employee_id",
+  "Regno": "regno", "Reg Date": "reg_date", "Name": "name", "Org Name": "org_name", "Mobile": "mobile", "Email": "email", "Address": "address", "Area Id": "area_id", "Ref Inside Office": "ref_inside_office", "Ref Name": "ref_name", "Employee Id": "employee_id",
 };
 
 export default {
@@ -88,19 +78,12 @@ export default {
   },
   watch: {
     "search_data.district_id": "getareas",
-    "search_data.service_id": "getpackages",
   },
   methods: {
     getareas() {
       var district_id = this.search_data.district_id;
       axios.get("/getareas/" + district_id).then((res) => {
         this.areas = res.data;
-      });
-    },
-    getpackages() {
-      var service_id = this.search_data.service_id;
-      axios.get("/getpackages/" + service_id).then((res) => {
-        this.packages = res.data;
       });
     },
     search() {

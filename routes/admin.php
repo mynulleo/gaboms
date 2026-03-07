@@ -99,7 +99,7 @@ Route::middleware(['auth:admin', 'tenantDB'])->group(function () {
     Route::get('getfundaccounts', [App\Http\Controllers\Admin\AccountController::class, 'getFundAccounts']);
     Route::get('getfundbalance/{account_id?}', [App\Http\Controllers\Admin\AccountController::class, 'getFundBalance']);
 
-
+    Route::post('import-workorder-excel', [App\Http\Controllers\Admin\WorkorderController::class, 'importWorkorderExcel']);
 
     Route::get('getemploaninstallment/{empid?}', [App\Http\Controllers\Admin\PaymentController::class, 'EmployeeLoanInstallment']);
 

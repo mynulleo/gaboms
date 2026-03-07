@@ -31,11 +31,11 @@ const app = createApp({
     },
     methods: {
         async getInitializeSystems() {
-            this.initialLoader = true;
-            await axios.get("app/initialize-systems").then((res) => {
-                this.site = res.data.site;
-                this.initialLoader = false;
-            });
+            this.initialLoader = false;
+            // await axios.get("app/initialize-systems").then((res) => {
+            //     this.site = res.data.site;
+            //     this.initialLoader = false;
+            // });
             return this.site;
         },
     },
@@ -63,7 +63,7 @@ if (process.env.NODE_ENV !== "production") {
     app.config.errorHandler = (error, instance, info) => {
         console.log(
             "%c!!------------ Error occurred -------------!!",
-            "color: red; font-size: 20px; font-weight: 800;"
+            "color: red; font-size: 20px; font-weight: 800;",
         );
         console.log("----------------------------------------");
 
@@ -79,7 +79,7 @@ if (process.env.NODE_ENV !== "production") {
         console.log("--------------------------------------");
         console.log(
             "%cError End! \n\n",
-            "color: red; font-size: 20px; font-weight: 800;"
+            "color: red; font-size: 20px; font-weight: 800;",
         );
 
         alert("Error occurred! Please, check your console. Thank you!");

@@ -64,11 +64,6 @@ class Client extends BaseModel
         return $startDate;
     }
 
-    public function service()
-    {
-        return $this->belongsTo(Service::class);
-    }
-
     public function employee()
     {
         return $this->belongsTo(Employee::class);
@@ -82,11 +77,6 @@ class Client extends BaseModel
     public function bank()
     {
         return $this->belongsTo(Bank::class);
-    }
-
-    public function package()
-    {
-        return $this->belongsTo(Package::class);
     }
 
     public function district()
